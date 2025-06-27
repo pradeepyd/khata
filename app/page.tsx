@@ -1,9 +1,12 @@
 import MnemonicCard from "@/components/MnemonicCard";
-import Image from "next/image";
+import WalletChecklist from "@/components/WalletCheckList";
 
 export default function Home() {
   return (
-    
+    <div>
+      <WalletChecklist/>
     <MnemonicCard/>
+
+      </div>
   );
 }

@@ -1,16 +1,21 @@
-import { mnemonic } from "@/lib/wallet"
-
-const wordsArray = mnemonic.trim().split(/\s+/);
+"use client"
+import { generateMnemonic } from "bip39";
+import { useState } from "react";
+import { MultiChainWallets } from "./SolWallet";
 const MnemonicCard = () => {
+    const [mnemonic, setMnemonic] = useState("");
     return (
         <div>
-        {wordsArray.map((word,index) => (
-            <div key={index}>
-               {index + 1}. {word}
-            </div>
-        ))}
-        </div>
-    )
+    <button onClick={async function () {
+        const mn = await generateMnemonic();
+        setMnemonic(mn)
+    }}>
+        Create Seed Phrase
+    </button>
+    {/* <input type="text" readOnly value={mnemonic}></input> */}
+    <p>{mnemonic}</p>
+       {mnemonic && <MultiChainWallets mnemonic={mnemonic}/>}
+    </div>
+)
 }
-
 export default MnemonicCard;
