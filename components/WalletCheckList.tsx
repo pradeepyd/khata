@@ -12,12 +12,12 @@ const WalletChecklist = ({
   selectedWallets,
   onSelectionChange,
 }:WalletChecklistProps) => {
-  const handleWalletToggle = (walletType: 'solana' | 'ethereum') => {
-    onSelectionChange({
-      ...selectedWallets,
-      [walletType]: !selectedWallets[walletType],
-    });
-  };
+  // const handleWalletToggle = (walletType: 'solana' | 'ethereum') => {
+  //   onSelectionChange({
+  //     ...selectedWallets,
+  //     [walletType]: !selectedWallets[walletType],
+  //   });
+  // };
 
   return (
     <div className="space-y-4">
@@ -25,7 +25,7 @@ const WalletChecklist = ({
         <Checkbox
           id="solana"
           checked={selectedWallets.solana}
-          onCheckedChange={() => handleWalletToggle('solana')}
+          // onCheckedChange={() => handleWalletToggle('solana')}
           className="border-gray-600 data-[state=checked]:bg-gray-600 data-[state=checked]:border-gray-600"
         />
         <Label htmlFor="solana" className="text-lg font-medium cursor-pointer text-white flex items-center space-x-2">
@@ -37,7 +37,7 @@ const WalletChecklist = ({
         <Checkbox
           id="ethereum"
           checked={selectedWallets.ethereum}
-          onCheckedChange={() => handleWalletToggle('ethereum')}
+          // onCheckedChange={() => handleWalletToggle('ethereum')}
           className="border-gray-600 data-[state=checked]:bg-gray-600 data-[state=checked]:border-gray-600"
         />
         <Label htmlFor="ethereum" className="text-lg font-medium cursor-pointer text-white flex items-center space-x-2">
