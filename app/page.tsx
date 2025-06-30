@@ -3,10 +3,10 @@ import WalletChecklist from "@/components/WalletCheckList";
 
 export default function Home() {
   return (
-    <div>
+    
+     <div>
       <WalletChecklist/>
-    <MnemonicCard/>
-
+      <MnemonicCard/>
       </div>
   );
 }

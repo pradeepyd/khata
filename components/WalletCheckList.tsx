@@ -8,10 +8,12 @@ interface WalletChecklistProps {
   onSelectionChange: (wallets: { solana: boolean; ethereum: boolean }) => void;
 }
 
-const WalletChecklist = ({
-  selectedWallets,
-  onSelectionChange,
-}:WalletChecklistProps) => {
+const WalletChecklist = (
+//   {
+//   selectedWallets,
+//   onSelectionChange,
+// }:WalletChecklistProps
+) => {
   // const handleWalletToggle = (walletType: 'solana' | 'ethereum') => {
   //   onSelectionChange({
   //     ...selectedWallets,
@@ -20,11 +22,11 @@ const WalletChecklist = ({
   // };
 
   return (
-    <div className="space-y-4">
+    <div className="space-x-4 flex ">
       <div className="flex items-center space-x-3">
         <Checkbox
           id="solana"
-          checked={selectedWallets.solana}
+          // checked={selectedWallets.solana}
           // onCheckedChange={() => handleWalletToggle('solana')}
           className="border-gray-600 data-[state=checked]:bg-gray-600 data-[state=checked]:border-gray-600"
         />
@@ -36,7 +38,7 @@ const WalletChecklist = ({
       <div className="flex items-center space-x-3">
         <Checkbox
           id="ethereum"
-          checked={selectedWallets.ethereum}
+          // checked={selectedWallets.ethereum}
           // onCheckedChange={() => handleWalletToggle('ethereum')}
           className="border-gray-600 data-[state=checked]:bg-gray-600 data-[state=checked]:border-gray-600"
         />
