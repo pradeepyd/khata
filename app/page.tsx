@@ -4,7 +4,7 @@ import WalletChecklist from "@/components/WalletCheckList";
 export default function Home() {
   return (
     
-     <div>
+     <div className="bg-black">
       <WalletChecklist/>
       <MnemonicCard/>
       </div>
