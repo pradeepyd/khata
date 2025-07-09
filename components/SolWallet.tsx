@@ -8,7 +8,6 @@ import bs58 from "bs58";
 
 export function SolWallets({ mnemonic }: { mnemonic: string }) {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [publicKeys, setPublicKeys] = useState<PublicKey[]>([]);
   const [wallets, setWallets] = useState<
     { publicKey: string; privateKey: string }[]
   >([]);
@@ -41,8 +40,10 @@ export function SolWallets({ mnemonic }: { mnemonic: string }) {
         {wallets.map((w, index) => (
           <div key={index} className="border border-gray-600 space-y-2 rounded  p-2 m-4 ">
             <div className="flex space-x-4 text-2xl items-center justify-centre "><img src="/solana-sol-logo.svg" alt="Solana logo" className="h-6 w-6" /><strong>Account {index + 1}</strong></div>
+            <div className="">
             <div className="text-gray-300">Public Key: {w.publicKey}</div>
             <div className="text-gray-300">Private Key: {w.privateKey}</div>
+            </div>
           </div>
         ))}
       </div>
