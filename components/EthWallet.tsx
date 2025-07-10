@@ -2,14 +2,37 @@
 import { useState } from "react";
 import { mnemonicToSeed } from "bip39";
 import { Wallet, HDNodeWallet } from "ethers";
-
+import { ChevronDown, ChevronUp, Eye, EyeOff, Trash2Icon } from "lucide-react";
 
 
 export const EthWallet = ({ mnemonic }: { mnemonic: string }) => {
     const [currentIndex, setCurrentIndex] = useState(0);
+    const [expandedIndexes, setExpandedIndexes] = useState<number[]>([]);
+    const [showPublicKeys, setShowPublicKeys] = useState<boolean[]>([]);
     const [wallets, setWallets] = useState<
         { publicKey: string; privateKey: string }[]
     >([]);
+
+    const handleDelete = (index: number) => {
+        const updatedWallets = [...wallets];
+        updatedWallets.splice(index, 1);
+        setWallets(updatedWallets);
+    };
+
+    const handleToggleExpand = (index: number) => {
+        if (expandedIndexes.includes(index)) {
+            setExpandedIndexes(expandedIndexes.filter(i => i !== index));
+        } else {
+            setExpandedIndexes([...expandedIndexes, index]);
+        }
+    };
+
+
+    const handleTogglePublicKey = (index: number) => {
+        const updatedShow = [...showPublicKeys];
+        updatedShow[index] = !updatedShow[index];
+        setShowPublicKeys(updatedShow);
+    };
 
     async function AddEthWallet() {
         const seed = await mnemonicToSeed(mnemonic);
@@ -19,6 +42,7 @@ export const EthWallet = ({ mnemonic }: { mnemonic: string }) => {
         const privateKey = child.privateKey;
         const wallet = new Wallet(privateKey);
         const publicKey = wallet.address;
+        setShowPublicKeys(prev => [...prev, false]);
         setCurrentIndex((prev) => prev + 1);
         setWallets((prev) => [
             ...prev,
@@ -30,16 +54,42 @@ export const EthWallet = ({ mnemonic }: { mnemonic: string }) => {
     }
 
     return (
-        <div className="items-center m-4 p-2">
-            <button onClick={AddEthWallet} className="bg-gray-800 px-4 m-4 ml-8 py-2 rounded border border-transparent text-center text-sm text-white transition-all shadow-md hover:shadow-lg focus:bg-gray-600 focus:shadow-none active:bg-gray-600 hover:bg-gray-600 active:shadow-none " type="button">
+        <div>
+            <button onClick={AddEthWallet} className="bg-gray-600 px-4 mt-8 py-2 rounded border border-transparent text-center text-md text-white transition-all shadow-md hover:shadow-lg focus:bg-gray-600 focus:shadow-none active:bg-gray-600 hover:bg-gray-600 active:shadow-none " type="button">
                 Add ETH wallet
             </button>
-            <div className="m-4 space-y-4 rounded text-white">
+            <div className="mt-8 space-y-4 rounded text-[#ECECEC] py-2">
                 {wallets.map((w, index) => (
-                    <div key={index} className="border border-gray-600 space-y-2 rounded p-2 m-4 ">
-                        <div className="flex space-x-4 text-2xl items-center justify-centre "><img src="/ethereum-eth-logo.svg" alt="Ethereum logo" className="h-6 w-6" /><strong>Account {index + 1}</strong></div>
-                        <div className="text-gray-300">Public Key: {w.publicKey}</div>
-                        <div className="text-gray-300">Private Key: {w.privateKey}</div>
+                    <div key={index} className="border border-gray-600 space-y-6 rounded-lg px-4 ">
+                        <div className="flex justify-between items-center pb-2">
+                            <div className="flex space-x-4 text-3xl mt-4 items-center justify-centre ">
+                                <img src="/ethereum-eth-logo.svg" alt="Ethereum logo" className="h-7 w-7" />
+                                <strong className="text-3xl my-2 pb-2">Account {index + 1}</strong>
+                            </div>
+                            <div className="flex space-x-4 mr-4">
+                                <button
+                                    onClick={() => handleDelete(index)}
+                                    className="mr-4 hover:text-red-500 transition-colors"
+                                >
+                                    <Trash2Icon size={20} className="text-red-800" />
+                                </button>
+                                <button onClick={() => handleToggleExpand(index)}>
+                                    {expandedIndexes.includes(index) ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
+                                </button>
+                            </div>
+                        </div>
+
+                    {expandedIndexes.includes(index) && (<div className="space-y-8 mt-4 mb-2">
+                        <div className="text-gray-300 my-4 py-2"><strong className="text-xl">Public Key: </strong>{w.publicKey}</div>
+                        <div className="text-gray-300 my-4 pb-2 flex items-center justify-between">
+                <div><strong className="text-xl">Private Key: </strong>  <span className={`${showPublicKeys[index] ? "" : ""} break-all`}>
+                {showPublicKeys[index] ? w.privateKey : "•••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••"}
+              </span>
+              </div>
+                <button onClick={() => handleTogglePublicKey(index)}>
+                  {showPublicKeys[index] ? <Eye size={20} /> : <EyeOff size={20} />}
+                </button></div>
+            </div>)}
                     </div>
                 ))}
             </div>
