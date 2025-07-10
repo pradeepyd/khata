@@ -30,9 +30,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      
       <body
-        className= {`${geistSans.variable} ${geistMono.variable} antialiased ${poppins.className} ${"bg-black"}`}
+        className= {`${geistSans.variable} ${geistMono.variable} antialiased ${poppins.className} ${"bg-[#161618]"}`}
       >
+        
         {children}
       </body>
     </html>
