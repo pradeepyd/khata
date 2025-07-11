@@ -60,7 +60,7 @@ const MnemonicCard = () => {
         {!mnemonic && (<button
           onClick={generateMenonics}
           disabled={!selectedWallet}
-          className="bg-gray-600 px-4 mt-4 mb-4 py-2 rounded border"
+          className="bg-gray-600 px-4 mt-4 mb-4 py-2 rounded border hover:bg-gray-500"
         >
           Generate Wallet
         </button>)}
